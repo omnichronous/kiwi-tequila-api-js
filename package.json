@@ -1,0 +1,19 @@
+{
+  "name": "kiwi-tequila-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "npx tsc && cp package.json dist/package.json",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.27.2"
+  },
+  "devDependencies": {
+    "@types/node": "^18.7.6",
+    "ts-node": "^10.9.1"
+  }
+}
