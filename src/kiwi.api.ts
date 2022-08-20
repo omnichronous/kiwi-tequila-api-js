@@ -1,13 +1,13 @@
 import { AxiosRequestConfig } from "axios";
+import { BookingApi, SearchApi, LocationsApi } from "./apis";
 import { KiwiOptions } from "./config";
-import { LocationsApi } from "./locations/locations.api";
-import { SearchApi } from "./search";
 import { buildConfig, mergeConfig } from "./utils";
 
 
 export class KiwiApi {
     locations: LocationsApi;
     search: SearchApi;
+    booking: BookingApi;
     private config: AxiosRequestConfig;
     constructor(options: KiwiOptions) {
         const baseConfig = buildConfig(options);
@@ -15,6 +15,7 @@ export class KiwiApi {
 
         this.config = mergeConfig(baseConfig, "v2");
         this.search = new SearchApi(this.config);
+        this.booking = new BookingApi(this.config);
     }
 }
 
