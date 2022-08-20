@@ -1,4 +1,4 @@
-export type Locale =
+export type LocationLocale =
     "ar-AE" | "cs-CZ" | "da-DK" | "de-DE" | "el-GR" |
     "en-US" | "es-ES" | "fi-FI" | "fr-FR" | "hu-HU" |
     "is-IS" | "it-IT" | "iw-IL" | "ja-JP" | "ko-KR" |

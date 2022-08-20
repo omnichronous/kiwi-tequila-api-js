@@ -5,6 +5,7 @@ export * from "./country.interface";
 export * from "./departure-point.interface";
 export * from "./lat-lng.interface";
 export * from "./location.interface";
+export * from "./meta.interface";
 export * from "./region.interface";
 export * from "./special.interface";
 export * from "./tag.interface";

@@ -1,4 +1,5 @@
 import { Simple } from "../types";
+import { formatDate } from "./format-date.util";
 
 export function buildUrl(baseURL: string, params?: Object) : string {
     if (params) {
@@ -27,11 +28,7 @@ export function buildUrl(baseURL: string, params?: Object) : string {
         if (value == null) return null;
 
         if (value instanceof Date) {
-            value = [
-                `${value.getDate()}`.padStart(2, "0"),
-                `${value.getMonth() + 1}`.padStart(2, "0"),
-                value.getFullYear()
-            ].join("/");
+            value = formatDate(value);
         }
 
         return `${key}=${encodeURIComponent(value)}`;

@@ -1,4 +1,4 @@
-export type SimpleLocale =
+export type SearchLocale =
     "ae" | "ag" | "ar" | "at" | "au" | "be" | "bg" | "bh" | 
     "br" | "by" | "ca" | "ca-fr" | "ch" | "cl" | "cn" | "co" | 
     "ct" | "cz" | "da" | "de" | "dk" | "ec" | "ee" | "el" | 

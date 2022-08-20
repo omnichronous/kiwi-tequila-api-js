@@ -1,4 +1,4 @@
-import { Meta } from "../../interfaces";
+import { Meta } from "../interfaces";
 import { Location } from "../interfaces";
 
 export interface LocationsResponse {

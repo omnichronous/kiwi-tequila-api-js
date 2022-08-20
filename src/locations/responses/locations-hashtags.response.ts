@@ -1,4 +1,4 @@
-import { Meta } from "../../interfaces";
+import { Meta } from "../interfaces";
 
 export interface LocationsHashtagsResponse {
     hashtags: string[];

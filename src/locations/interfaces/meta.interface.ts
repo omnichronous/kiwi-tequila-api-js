@@ -1,8 +1,8 @@
-import { Locale } from "../types"
+import { LocationLocale } from "../types"
 
 export interface Meta {
     locale: {
-        code: Locale,
+        code: LocationLocale,
         status: string;
     };
 }

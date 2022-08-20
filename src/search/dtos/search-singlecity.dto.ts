@@ -1,8 +1,9 @@
+import { NumericBoolean } from "../../types";
 import { Cabin, Days } from "../enums";
 import { FlyLocation, Radius } from "../interfaces";
-import { Currency, FlyDaysType, FlyLocations, HandBags, HoldBags, NumericBoolean, SimpleLocale, VehicleType } from "../types";
+import { Currency, FlyDaysType, FlyLocations, HandBags, HoldBags, SearchLocale, VehicleType } from "../types";
 
-export interface SearchDto {
+export interface SearchSingleCityDto {
     /**
      * Kiwi API ID of the departure location. It accepts multiple
      * values separated by a comma, these values might be airport
@@ -282,7 +283,7 @@ export interface SearchDto {
      * 
      * Example :
      */
-    locale?: SimpleLocale;
+    locale?: SearchLocale;
     /**
      * result filter, minimal price
      * 
@@ -465,7 +466,7 @@ export interface SearchDto {
     limit?: number;
 }
 
-export function serializeSearchDto(dto: SearchDto) : SearchDto {
+export function serializeSearchDto(dto: SearchSingleCityDto) : SearchSingleCityDto {
     if (dto.fly_from) dto.fly_from = serializeFlyLocations(dto.fly_from);
     if (dto.fly_to) dto.fly_to = serializeFlyLocations(dto.fly_to);
 

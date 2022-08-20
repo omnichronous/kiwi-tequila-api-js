@@ -1,6 +1,5 @@
-import { Locale } from "../../types";
 import { Sort } from "../enums";
-import { LocationTypes } from "../types";
+import { LocationLocale, LocationTypes } from "../types";
 
 export interface CommonLocationDto {
     /**
@@ -8,7 +7,7 @@ export interface CommonLocationDto {
      * of the results. Should any other locale be used
      * other than the specified locales, en-US is used.
      */
-    locale?: Locale;
+    locale?: LocationLocale;
     /**
      * desired location output
      */
