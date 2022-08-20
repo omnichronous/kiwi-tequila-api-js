@@ -1,29 +1,28 @@
 import { FlyLocation, Radius } from "../interfaces";
 import { FlyLocations } from "../types";
 
-export function serializeFlyLocations(input: FlyLocations) : string {
-    const sep = ",";
+export function serializeFlyLocations(input: FlyLocations) : string[] {
     if (Array.isArray(input)) {
-        return input.map(serializeFlyLocations).join(sep);
+        return input.flatMap(serializeFlyLocations);
     }
 
     if (isFlyLocation(input)) {
         const { type, value } = input;
 
         if (Array.isArray(value)) {
-            return value.map(v => `${type}:${v}`).join(sep);
+            return value.map(v => `${type}:${v}`);
         }
 
-        return `${type}:${value}`;
+        return [`${type}:${value}`];
     }
 
     if (isRadius(input)) {
         const { lat, lon, xkm } = input;
 
-        return `${lat}-${lon}-${xkm}km`;
+        return [`${lat}-${lon}-${xkm}km`];
     }
 
-    return input;
+    return [input];
 }
 
 function isFlyLocation(obj: unknown): obj is FlyLocation {

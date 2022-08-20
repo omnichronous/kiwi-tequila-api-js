@@ -1,6 +1,5 @@
 import { NumericBoolean } from "../../types";
 import { Cabin, Days } from "../enums";
-import { FlyLocation, Radius } from "../interfaces";
 import { Currency, FlyDaysType, FlyLocations, HandBags, HoldBags, SearchLocale, VehicleType } from "../types";
 
 export interface SearchSingleCityDto {
@@ -60,7 +59,12 @@ export interface SearchSingleCityDto {
      */
     date_to: Date;
     /**
-     * min return date of the whole trip (dd/mm/yyyy)
+     * search flights from this date (DD/MM/YYYY). Use parameters dateFrom and
+     * dateTo as a date range for the flight departure. Parameters
+     * ‘date_from=01/05/2019’ and ‘date_to=30/05/2019’ mean that the departure
+     * can be anytime between the specified dates. For the dates of the return
+     * flights, use the ‘return_to’ and ‘return_from’ or ‘nights_on_trip_from’
+     * and ‘nights_on_trip_to’ parameters.
      * 
      * Example : 03/04/2021
      */
@@ -464,83 +468,4 @@ export interface SearchSingleCityDto {
      * Example : 500
      */
     limit?: number;
-}
-
-export function serializeSearchDto(dto: SearchSingleCityDto) : SearchSingleCityDto {
-    if (dto.fly_from) dto.fly_from = serializeFlyLocations(dto.fly_from);
-    if (dto.fly_to) dto.fly_to = serializeFlyLocations(dto.fly_to);
-
-    if (dto.adult_hold_bag) dto.adult_hold_bag = serializeHoldBags(dto.adult_hold_bag);
-    if (dto.adult_hand_bag) dto.adult_hand_bag = serializeHandBags(dto.adult_hand_bag);
-    if (dto.child_hold_bag) dto.child_hold_bag = serializeHoldBags(dto.child_hold_bag);
-    if (dto.child_hand_bag) dto.child_hand_bag = serializeHandBags(dto.child_hand_bag);
-    if (typeof dto.conn_on_diff_airport === "boolean") dto.conn_on_diff_airport = serializeNumericBoolean(dto.conn_on_diff_airport);
-    if (typeof dto.ret_from_diff_airport === "boolean") dto.ret_from_diff_airport = serializeNumericBoolean(dto.ret_from_diff_airport);
-    if (typeof dto.ret_to_diff_airport === "boolean") dto.ret_to_diff_airport = serializeNumericBoolean(dto.ret_to_diff_airport);
-    if (dto.select_airlines) dto.select_airlines = serializeStrArray(dto.select_airlines);
-    if (dto.select_stop_airport) dto.select_stop_airport = serializeStrArray(dto.select_stop_airport);
-    if (typeof dto.asc === "boolean") dto.asc = serializeNumericBoolean(dto.asc);
-
-    return dto;
-}
-
-function serializeFlyLocations(input: FlyLocations) : string {
-    const sep = ",";
-    if (Array.isArray(input)) {
-        return input.map(serializeFlyLocations).join(sep);
-    }
-
-    if (isFlyLocation(input)) {
-        const { type, value } = input;
-
-        if (Array.isArray(value)) {
-            return value.map(v => `${type}:${v}`).join(sep);
-        }
-
-        return `${type}:${value}`;
-    }
-
-    if (isRadius(input)) {
-        const { lat, lon, xkm } = input;
-
-        return `${lat}-${lon}-${xkm}km`;
-    }
-
-    return input;
-
-    function isFlyLocation(obj: unknown): obj is FlyLocation {
-        return !!obj &&
-            typeof obj === "object" &&
-            "type" in obj &&
-            "value" in obj;
-    }
-    
-    function isRadius(obj: unknown): obj is Radius {
-        return !!obj &&
-            typeof obj === "object" &&
-            "lat" in obj &&
-            "lon" in obj &&
-            "xkm" in obj;
-    }
-}
-
-function serializeNumericBoolean(obj: boolean) : 1 | 0 {
-    return obj ? 1 : 0;
-}
-
-function serializeHandBags(obj: HandBags) : HandBags {
-    if (Array.isArray(obj)) return obj.join(",");
-
-    return obj;
-}
-
-function serializeHoldBags(obj: HoldBags) : HoldBags {
-    if (Array.isArray(obj)) return obj.join(",");
-
-    return obj;
-}
-
-function serializeStrArray(str: string | string[]) : string {
-    if (Array.isArray(str)) return str.join(',');
-    return str;
 }

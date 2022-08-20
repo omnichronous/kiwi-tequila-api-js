@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { buildUrl, formatDate, serializeNumericBoolean, serializeStrArray } from "../utils";
-import { SearchMultiCityDto, SearchSingleCityDto } from "./dtos";
-import { SearchMultiCityResponse, SearchSingleCityResponse } from "./responses";
+import { SearchMultiCityDto, SearchNomadBodyDto, SearchNomadParamsDto, SearchSingleCityDto } from "./dtos";
+import { SearchMultiCityResponse, SearchNomadResponse, SearchSingleCityResponse } from "./responses";
 import { Currency, SearchLocale } from "./types";
 import { serializeFlyLocations, serializeHandBags, serializeHoldBags } from "./utils";
 
@@ -19,9 +19,9 @@ export class SearchApi {
      * @param params 
      */
     async singlecity(dto: SearchSingleCityDto): Promise<SearchSingleCityResponse> {
-        if (dto.fly_from) dto.fly_from = serializeFlyLocations(dto.fly_from);
-        if (dto.fly_to) dto.fly_to = serializeFlyLocations(dto.fly_to);
-    
+        if (dto.fly_from) dto.fly_from = serializeFlyLocations(dto.fly_from).join(",");
+        if (dto.fly_to) dto.fly_to = serializeFlyLocations(dto.fly_to).join(",");
+
         if (dto.adult_hold_bag) dto.adult_hold_bag = serializeHoldBags(dto.adult_hold_bag);
         if (dto.adult_hand_bag) dto.adult_hand_bag = serializeHandBags(dto.adult_hand_bag);
         if (dto.child_hold_bag) dto.child_hold_bag = serializeHoldBags(dto.child_hold_bag);
@@ -36,11 +36,11 @@ export class SearchApi {
         const { data } = await axios.get<SearchSingleCityResponse>(buildUrl("search", dto), this.config);
 
         data.data?.forEach((v, i) => {
-            formatDates(v);
+            formatResponseDates(v);
             
             if (Array.isArray(v.route)) {
                 v.route.forEach(r => {
-                    formatDates(r);
+                    formatResponseDates(r);
                 });
             }
         });
@@ -77,11 +77,42 @@ export class SearchApi {
         const { data } = await axios.post<SearchMultiCityResponse>(buildUrl("multicity", params), dto, this.config);
 
         data.route?.forEach(v => {
-            formatDates(v);
+            formatResponseDates(v);
             
             if (Array.isArray(v.route)) {
                 v.route.forEach(r => {
-                    formatDates(r);
+                    formatResponseDates(r);
+                });
+            }
+        });
+
+        return data;
+    }
+
+    async nomad(dto: SearchNomadBodyDto, params: SearchNomadParamsDto) : Promise<SearchNomadResponse> {
+        if (typeof params?.xml === "boolean") params.xml = serializeNumericBoolean(params.xml);
+        if (typeof params?.asc === "boolean") params.asc = serializeNumericBoolean(params.asc);
+        if (Array.isArray(params?.select_airlines)) params.select_airlines = serializeStrArray(params.select_airlines);
+        if (params.fly_from) params.fly_from = serializeFlyLocations(params.fly_from).join(",");
+        if (params.fly_to) params.fly_to = serializeFlyLocations(params.fly_to).join(",");
+        if (typeof params.conn_on_diff_airport === "boolean") params.conn_on_diff_airport = serializeNumericBoolean(params.conn_on_diff_airport);
+
+        dto.via?.forEach(v => {
+            if (v.locations) v.locations = serializeFlyLocations(v.locations);
+            if (v.date_range) v.date_range = [
+                v.date_range[0] instanceof Date ? formatDate(v.date_range[0]) : v.date_range[0],
+                v.date_range[1] instanceof Date ? formatDate(v.date_range[1]) : v.date_range[1],
+            ];
+        });
+
+        const { data } = await axios.post<SearchNomadResponse>(buildUrl("nomad", params), dto, this.config);
+
+        data.route?.forEach(v => {
+            formatResponseDates(v);
+            
+            if (Array.isArray(v.route)) {
+                v.route.forEach(r => {
+                    formatResponseDates(r);
                 });
             }
         });
@@ -90,7 +121,7 @@ export class SearchApi {
     }
 }
 
-function formatDates(obj: {
+function formatResponseDates(obj: {
     local_arrival?: Date | string;
     local_departure?: Date | string;
     utc_arrival?: Date | string;
