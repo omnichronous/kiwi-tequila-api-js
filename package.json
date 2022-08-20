@@ -3,6 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "homepage": "https://tequila.kiwi.com/portal/docs/tequila_api",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ohm-vision/kiwi-tequila-api-js"
+  },
   "scripts": {
     "build": "npx tsc && cp package.json dist/package.json",
     "test": "echo \"Error: no test specified\" && exit 1"
