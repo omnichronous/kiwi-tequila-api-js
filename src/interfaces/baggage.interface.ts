@@ -7,6 +7,9 @@ export interface BookingBaggage {
         passenger_groups: PassengerCategory[];
         is_priority?: string[];
     };
+    /**
+     * If “true,” the cabin bag needs to be put in hold
+     */
     is_hold: boolean;
     category: BaggageCategory;
     restrictions: {

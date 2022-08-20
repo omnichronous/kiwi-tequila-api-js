@@ -50,6 +50,9 @@ export interface Passenger {
 export interface BookingPassenger extends Omit<Passenger, "phone" | "email"> {
     pk: number;
     bid: string;
+    /**
+     * date and time when check-in opens
+     */
     checkin: string | Date;
     hand_bags: HandBag;
     hold_bags: HoldBag;

@@ -1,8 +1,15 @@
-export interface SearchMultiCityDto {
-    requests: SearchMultiCityDtoRequest[];
+import { Currency, SearchLocale } from "../types";
+
+export interface SearchMultiCityParamsDto {
+    locale?: SearchLocale,
+    curr?: Currency,
 }
 
-export interface SearchMultiCityDtoRequest {
+export interface SearchMultiCityBodyDto {
+    requests: SearchMultiCityBodyDtoRequest[];
+}
+
+export interface SearchMultiCityBodyDtoRequest {
     /**
      * IATA code of the destination
      */

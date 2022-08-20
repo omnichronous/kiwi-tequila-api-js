@@ -1,8 +1,7 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { buildUrl, formatDate, serializeNumericBoolean, serializeStrArray } from "../utils";
-import { SearchMultiCityDto, SearchNomadBodyDto, SearchNomadParamsDto, SearchSingleCityDto } from "../dtos";
+import { SearchMultiCityBodyDto, SearchMultiCityParamsDto, SearchNomadBodyDto, SearchNomadParamsDto, SearchSingleCityDto } from "../dtos";
 import { SearchMultiCityResponse, SearchNomadResponse, SearchSingleCityResponse } from "../responses";
-import { Currency, SearchLocale } from "../types";
 import { serializeFlyLocations, serializeHandBags, serializeHoldBags } from "../utils";
 
 export class SearchApi {
@@ -65,10 +64,7 @@ export class SearchApi {
      * @param params 
      * @returns 
      */
-    async multicity(dto: SearchMultiCityDto, params?: {
-        locale?: SearchLocale,
-        curr?: Currency,
-    }): Promise<SearchMultiCityResponse> {
+    async multicity(dto: SearchMultiCityBodyDto, params?: SearchMultiCityParamsDto): Promise<SearchMultiCityResponse> {
         dto.requests.forEach(v => {
             if (v.dateFrom instanceof Date) v.dateFrom = formatDate(v.dateFrom);
             if (v.dateTo instanceof Date) v.dateTo = formatDate(v.dateTo);

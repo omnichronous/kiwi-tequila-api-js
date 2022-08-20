@@ -86,6 +86,9 @@ export interface BookingFlight extends Flight {
     seats: number;
     source_name: string;
     source_url: string;
+    /**
+     * date and time when check-in opens
+     */
     checkin: string | Date;
     src_country: string;
     dst_country: string;

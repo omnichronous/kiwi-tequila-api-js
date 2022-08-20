@@ -2,8 +2,22 @@ import { DocumentOptions } from "../interfaces";
 
 export interface BookingResponse {
     pnum: number;
+    /**
+     * price for the itinerary (with baggage)
+     * in EUR
+     */
     total: number;
+    /**
+     * price breakdown for adults
+     * total price for all traveling adults, based on “adult”
+     * param in request
+     */
     adults_price: number;
+    /**
+     * price breakdown for infants
+     * total price for all traveling infants, based on “infant”
+     * param in request
+     */
     infants_price: number;
     book_fee: number;
     credits_price: number;
@@ -11,12 +25,20 @@ export interface BookingResponse {
     transfers: string[];
     document_options: DocumentOptions;
     visas_agreement_requiered: boolean;
+    /**
+     * total price for the itinerary in EUR
+     */
     eur_payment_price: number;
     extra_fee: number;
     sp_fee: number;
     fee_airline: number;
     flights_price: number;
     flight_real_price: number;
+    /**
+     * confirms the price and flight bookability
+     * 
+     * must return “true” to be able to continue to save_booking
+     */
     flights_checked: boolean;
     flights_real_checked: boolean;
     flights_to_check: boolean;

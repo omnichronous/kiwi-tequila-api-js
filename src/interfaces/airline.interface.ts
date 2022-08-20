@@ -50,7 +50,12 @@ export interface Airline {
     checkin: number;
     checkin_closure: number;
     close_booking_hours: number;
-    doing_online_checkin: number;
+    /**
+     * states if Kiwi.com provides online check-in.
+     * * 0: no (passenger must check in at the airport).
+     * * 1: yes
+     */
+    doing_online_checkin: 0 | 1;
     grade: string;
     maximum_passengers: number;
     passengers_in_search: number;
