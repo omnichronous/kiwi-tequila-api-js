@@ -1,6 +1,8 @@
-import { formatDate } from "../../utils";
-
 export interface SearchMultiCityDto {
+    requests: SearchMultiCityDtoRequest[];
+}
+
+export interface SearchMultiCityDtoRequest {
     /**
      * IATA code of the destination
      */

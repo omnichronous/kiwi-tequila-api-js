@@ -1,6 +1,7 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { buildUrl, formatDate, serializeNumericBoolean, serializeStrArray } from "../utils";
 import { SearchMultiCityDto, SearchSingleCityDto } from "./dtos";
+import { SearchMultiCityResponse, SearchSingleCityResponse } from "./responses";
 import { Currency, SearchLocale } from "./types";
 import { serializeFlyLocations, serializeHandBags, serializeHoldBags } from "./utils";
 
@@ -17,7 +18,7 @@ export class SearchApi {
      * 
      * @param params 
      */
-    async singlecity(dto: SearchSingleCityDto): Promise<any> {
+    async singlecity(dto: SearchSingleCityDto): Promise<SearchSingleCityResponse> {
         if (dto.fly_from) dto.fly_from = serializeFlyLocations(dto.fly_from);
         if (dto.fly_to) dto.fly_to = serializeFlyLocations(dto.fly_to);
     
@@ -32,7 +33,17 @@ export class SearchApi {
         if (dto.select_stop_airport) dto.select_stop_airport = serializeStrArray(dto.select_stop_airport);
         if (typeof dto.asc === "boolean") dto.asc = serializeNumericBoolean(dto.asc);
             
-        const { data } = await axios.get(buildUrl("search", dto), this.config);
+        const { data } = await axios.get<SearchSingleCityResponse>(buildUrl("search", dto), this.config);
+
+        data.data?.forEach((v, i) => {
+            formatDates(v);
+            
+            if (Array.isArray(v.route)) {
+                v.route.forEach(r => {
+                    formatDates(r);
+                });
+            }
+        });
 
         return data;
     }
@@ -57,12 +68,36 @@ export class SearchApi {
     async multicity(dto: SearchMultiCityDto, params?: {
         locale?: SearchLocale,
         curr?: Currency,
-    }): Promise<any> {
-        if (dto.dateFrom instanceof Date) dto.dateFrom = formatDate(dto.dateFrom);
-        if (dto.dateTo instanceof Date) dto.dateTo = formatDate(dto.dateTo);
+    }): Promise<SearchMultiCityResponse> {
+        dto.requests.forEach(v => {
+            if (v.dateFrom instanceof Date) v.dateFrom = formatDate(v.dateFrom);
+            if (v.dateTo instanceof Date) v.dateTo = formatDate(v.dateTo);
+        });
 
-        const { data } = await axios.post(buildUrl("multicity", params), dto, this.config);
+        const { data } = await axios.post<SearchMultiCityResponse>(buildUrl("multicity", params), dto, this.config);
+
+        data.route?.forEach(v => {
+            formatDates(v);
+            
+            if (Array.isArray(v.route)) {
+                v.route.forEach(r => {
+                    formatDates(r);
+                });
+            }
+        });
 
         return data;
     }
+}
+
+function formatDates(obj: {
+    local_arrival?: Date | string;
+    local_departure?: Date | string;
+    utc_arrival?: Date | string;
+    utc_departure?: Date | string;
+}) {
+    if (typeof obj.local_arrival === "string") obj.local_arrival = new Date(obj.local_arrival);
+    if (typeof obj.local_departure === "string") obj.local_departure = new Date(obj.local_departure);
+    if (typeof obj.utc_arrival === "string") obj.utc_arrival = new Date(obj.utc_arrival);
+    if (typeof obj.utc_departure === "string") obj.utc_departure = new Date(obj.utc_departure);
 }
