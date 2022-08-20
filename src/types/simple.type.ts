@@ -1,1 +1,1 @@
-export type Simple = string | number | boolean | Date | undefined;
+export type Simple = string | number | boolean | Date;

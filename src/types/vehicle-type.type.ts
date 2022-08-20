@@ -1,0 +1,1 @@
+export type VehicleType = "aircraft" | "bus" | "train";

@@ -17,7 +17,7 @@ export class LocationsApi {
      * @returns 
      */
     async searchByQuery(params: LocationSearchByQueryDto): Promise<LocationsResponse> {
-        const { data } = await axios.get(buildUrl("query", params), this.config);
+        const { data } = await axios.get<LocationsResponse>(buildUrl("query", params), this.config);
 
         return data;
     }
@@ -31,7 +31,7 @@ export class LocationsApi {
      * @returns 
      */
     async searchByRadius(params: LocationSearchByRadiusDto): Promise<LocationsResponse> {
-        const { data } = await axios.get(buildUrl("radius", params), this.config);
+        const { data } = await axios.get<LocationsResponse>(buildUrl("radius", params), this.config);
 
         return data;
     }
@@ -44,7 +44,7 @@ export class LocationsApi {
      * @returns 
      */
     async searchByBox(params: LocationSearchByBoxDto): Promise<LocationsResponse> {
-        const { data } = await axios.get(buildUrl("box", params), this.config);
+        const { data } = await axios.get<LocationsResponse>(buildUrl("box", params), this.config);
 
         return data;
     }
@@ -59,7 +59,7 @@ export class LocationsApi {
      * @returns 
      */
     async getBySubentity(params: LocationGetBySubentityDto): Promise<LocationsResponse> {
-        const { data } = await axios.get(buildUrl("subentity", params), this.config);
+        const { data } = await axios.get<LocationsResponse>(buildUrl("subentity", params), this.config);
 
         return data;
     }
@@ -72,7 +72,7 @@ export class LocationsApi {
      * @returns 
      */
     async getById(params: LocationGetByIdDto): Promise<LocationsResponse> {
-        const { data } = await axios.get(buildUrl("id", params), this.config);
+        const { data } = await axios.get<LocationsResponse>(buildUrl("id", params), this.config);
 
         return data;
     }
@@ -85,7 +85,7 @@ export class LocationsApi {
      * @returns 
      */
     async getByAnything(params: LocationGetByAnythingDto): Promise<LocationsResponse> {
-        const { data } = await axios.get(buildUrl("anything", params), this.config);
+        const { data } = await axios.get<LocationsResponse>(buildUrl("anything", params), this.config);
 
         return data;
     }
@@ -100,7 +100,7 @@ export class LocationsApi {
      * @returns 
      */
     async getDump(params: LocationGetDumpDto): Promise<LocationsDumpResponse> {
-        const { data } = await axios.get(buildUrl("dump", params), this.config);
+        const { data } = await axios.get<LocationsDumpResponse>(buildUrl("dump", params), this.config);
 
         return data;
     }
@@ -114,7 +114,7 @@ export class LocationsApi {
      * @returns 
      */
     async searchTopDestinations(params: LocationSearchTopDestinationsDto): Promise<LocationsResponse> {
-        const { data } = await axios.get(buildUrl("tophashtags", params), this.config);
+        const { data } = await axios.get<LocationsResponse>(buildUrl("tophashtags", params), this.config);
 
         return data;
     }
@@ -128,7 +128,7 @@ export class LocationsApi {
      * @returns 
      */
     async searchByHashtags(params: LocationSearchByHashtagDto): Promise<LocationsResponse> {
-        const { data } = await axios.get(buildUrl("hashtag", params), this.config);
+        const { data } = await axios.get<LocationsResponse>(buildUrl("hashtag", params), this.config);
 
         return data;
     }
@@ -144,7 +144,7 @@ export class LocationsApi {
      * @returns 
      */
     async topDestinationsHashtagsLookup(params: LocationTopDestinationsHashtagsLookupDto): Promise<LocationsHashtagsResponse> {
-        const { data } = await axios.get(buildUrl("tophashtags", params), this.config);
+        const { data } = await axios.get<LocationsHashtagsResponse>(buildUrl("tophashtags", params), this.config);
 
         return data;
     }
@@ -156,7 +156,7 @@ export class LocationsApi {
      * @returns 
      */
     async searchBySeoUrl(params: LocationSearchBySeoUrlDto): Promise<LocationsResponse> {
-        const { data } = await axios.get(buildUrl("slug", params), this.config);
+        const { data } = await axios.get<LocationsResponse>(buildUrl("slug", params), this.config);
 
         return data;
     }
