@@ -4,7 +4,7 @@ import { BookingCheckFlightDto, BookingConfirmPaymentDto, BookingSaveBodyDto, Bo
 import { BookingCheckFlightsResponse, BookingConfirmPaymentResponse, BookingSaveResponse } from "../responses";
 
 export class BookingApi {
-    private config: AxiosRequestConfig;
+    private readonly config: AxiosRequestConfig;
     constructor(config: AxiosRequestConfig) {
         this.config = mergeConfig(config, "booking");
     }

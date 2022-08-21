@@ -5,7 +5,7 @@ import { SearchMultiCityResponse, SearchNomadResponse, SearchSingleCityResponse 
 import { serializeFlyLocations, serializeHandBags, serializeHoldBags } from "../utils";
 
 export class SearchApi {
-    private config: AxiosRequestConfig;
+    private readonly config: AxiosRequestConfig;
     constructor(config: AxiosRequestConfig) {
         this.config = config;
     }

@@ -4,7 +4,7 @@ import { LocationGetByAnythingDto, LocationGetByIdDto, LocationGetBySubentityDto
 import { LocationsDumpResponse, LocationsHashtagsResponse, LocationsResponse } from "../responses";
 
 export class LocationsApi {
-    private config: AxiosRequestConfig;
+    private readonly config: AxiosRequestConfig;
     constructor(baseConfig: AxiosRequestConfig) {
         this.config = mergeConfig(baseConfig, "locations");
     }
