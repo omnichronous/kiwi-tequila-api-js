@@ -1,12 +1,12 @@
-import axios, { AxiosRequestConfig } from "axios";
+import { ofetch, FetchOptions } from "ofetch"
 import { buildUrl, formatDate, serializeNumericBoolean, serializeStrArray } from "../utils";
 import { SearchMultiCityBodyDto, SearchMultiCityParamsDto, SearchNomadBodyDto, SearchNomadParamsDto, SearchSingleCityDto } from "../dtos";
 import { SearchMultiCityResponse, SearchNomadResponse, SearchSingleCityResponse } from "../responses";
 import { serializeFlyLocations, serializeHandBags, serializeHoldBags } from "../utils";
 
 export class SearchApi {
-    private readonly config: AxiosRequestConfig;
-    constructor(config: AxiosRequestConfig) {
+    private readonly config: FetchOptions<'json'>;
+    constructor(config: FetchOptions<'json'>) {
         this.config = config;
     }
 
@@ -32,7 +32,7 @@ export class SearchApi {
         if (dto.select_stop_airport) dto.select_stop_airport = serializeStrArray(dto.select_stop_airport);
         if (typeof dto.asc === "boolean") dto.asc = serializeNumericBoolean(dto.asc);
             
-        const { data } = await axios.get<SearchSingleCityResponse>(buildUrl("search", dto), this.config);
+        const data = await ofetch<SearchSingleCityResponse>(buildUrl("search", dto), this.config);
 
         data.data?.forEach((v, i) => {
             formatResponseDates(v);
@@ -70,7 +70,11 @@ export class SearchApi {
             if (v.dateTo instanceof Date) v.dateTo = formatDate(v.dateTo);
         });
 
-        const { data } = await axios.post<SearchMultiCityResponse>(buildUrl("multicity", params), dto, this.config);
+        const data = await ofetch<SearchMultiCityResponse>(buildUrl("multicity", params), {
+            method: 'post',
+            body: dto,
+            ...this.config
+        });
 
         data.route?.forEach(v => {
             formatResponseDates(v);
@@ -101,7 +105,11 @@ export class SearchApi {
             ];
         });
 
-        const { data } = await axios.post<SearchNomadResponse>(buildUrl("nomad", params), dto, this.config);
+        const data = await await ofetch<SearchNomadResponse>(buildUrl("nomad", params), {
+            method: 'post',
+            body: dto,
+            ...this.config
+        });
 
         data.route?.forEach(v => {
             formatResponseDates(v);

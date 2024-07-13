@@ -1,11 +1,11 @@
-import axios, { AxiosRequestConfig } from "axios";
+import { ofetch, FetchOptions } from "ofetch"
 import { buildUrl, mergeConfig } from "../utils";
 import { LocationGetByAnythingDto, LocationGetByIdDto, LocationGetBySubentityDto, LocationGetDumpDto, LocationSearchByBoxDto, LocationSearchByHashtagDto, LocationSearchByQueryDto, LocationSearchByRadiusDto, LocationSearchBySeoUrlDto, LocationSearchTopDestinationsDto, LocationTopDestinationsHashtagsLookupDto } from "../dtos";
 import { LocationsDumpResponse, LocationsHashtagsResponse, LocationsResponse } from "../responses";
 
 export class LocationsApi {
-    private readonly config: AxiosRequestConfig;
-    constructor(baseConfig: AxiosRequestConfig) {
+    private readonly config: FetchOptions<'json'>;
+    constructor(baseConfig: FetchOptions<'json'>) {
         this.config = mergeConfig(baseConfig, "locations");
     }
 
@@ -17,7 +17,7 @@ export class LocationsApi {
      * @returns 
      */
     async searchByQuery(params: LocationSearchByQueryDto): Promise<LocationsResponse> {
-        const { data } = await axios.get<LocationsResponse>(buildUrl("query", params), this.config);
+        const data = await ofetch<LocationsResponse>(buildUrl("query", params), this.config);
 
         return data;
     }
@@ -31,7 +31,7 @@ export class LocationsApi {
      * @returns 
      */
     async searchByRadius(params: LocationSearchByRadiusDto): Promise<LocationsResponse> {
-        const { data } = await axios.get<LocationsResponse>(buildUrl("radius", params), this.config);
+        const data = await ofetch<LocationsResponse>(buildUrl("radius", params), this.config);
 
         return data;
     }
@@ -44,7 +44,7 @@ export class LocationsApi {
      * @returns 
      */
     async searchByBox(params: LocationSearchByBoxDto): Promise<LocationsResponse> {
-        const { data } = await axios.get<LocationsResponse>(buildUrl("box", params), this.config);
+        const data = await ofetch<LocationsResponse>(buildUrl("box", params), this.config);
 
         return data;
     }
@@ -59,7 +59,7 @@ export class LocationsApi {
      * @returns 
      */
     async getBySubentity(params: LocationGetBySubentityDto): Promise<LocationsResponse> {
-        const { data } = await axios.get<LocationsResponse>(buildUrl("subentity", params), this.config);
+        const data = await ofetch<LocationsResponse>(buildUrl("subentity", params), this.config);
 
         return data;
     }
@@ -72,7 +72,7 @@ export class LocationsApi {
      * @returns 
      */
     async getById(params: LocationGetByIdDto): Promise<LocationsResponse> {
-        const { data } = await axios.get<LocationsResponse>(buildUrl("id", params), this.config);
+        const data = await ofetch<LocationsResponse>(buildUrl("id", params), this.config);
 
         return data;
     }
@@ -85,7 +85,7 @@ export class LocationsApi {
      * @returns 
      */
     async getByAnything(params: LocationGetByAnythingDto): Promise<LocationsResponse> {
-        const { data } = await axios.get<LocationsResponse>(buildUrl("anything", params), this.config);
+        const data = await ofetch<LocationsResponse>(buildUrl("anything", params), this.config);
 
         return data;
     }
@@ -100,7 +100,7 @@ export class LocationsApi {
      * @returns 
      */
     async getDump(params: LocationGetDumpDto): Promise<LocationsDumpResponse> {
-        const { data } = await axios.get<LocationsDumpResponse>(buildUrl("dump", params), this.config);
+        const data = await ofetch<LocationsDumpResponse>(buildUrl("dump", params), this.config);
 
         return data;
     }
@@ -114,7 +114,7 @@ export class LocationsApi {
      * @returns 
      */
     async searchTopDestinations(params: LocationSearchTopDestinationsDto): Promise<LocationsResponse> {
-        const { data } = await axios.get<LocationsResponse>(buildUrl("tophashtags", params), this.config);
+        const data = await ofetch<LocationsResponse>(buildUrl("tophashtags", params), this.config);
 
         return data;
     }
@@ -128,7 +128,7 @@ export class LocationsApi {
      * @returns 
      */
     async searchByHashtags(params: LocationSearchByHashtagDto): Promise<LocationsResponse> {
-        const { data } = await axios.get<LocationsResponse>(buildUrl("hashtag", params), this.config);
+        const data = await ofetch<LocationsResponse>(buildUrl("hashtag", params), this.config);
 
         return data;
     }
@@ -144,7 +144,7 @@ export class LocationsApi {
      * @returns 
      */
     async topDestinationsHashtagsLookup(params: LocationTopDestinationsHashtagsLookupDto): Promise<LocationsHashtagsResponse> {
-        const { data } = await axios.get<LocationsHashtagsResponse>(buildUrl("tophashtags", params), this.config);
+        const data = await ofetch<LocationsHashtagsResponse>(buildUrl("tophashtags", params), this.config);
 
         return data;
     }
@@ -156,7 +156,7 @@ export class LocationsApi {
      * @returns 
      */
     async searchBySeoUrl(params: LocationSearchBySeoUrlDto): Promise<LocationsResponse> {
-        const { data } = await axios.get<LocationsResponse>(buildUrl("slug", params), this.config);
+        const data = await ofetch<LocationsResponse>(buildUrl("slug", params), this.config);
 
         return data;
     }

@@ -1,7 +1,7 @@
-import { AxiosRequestConfig } from "axios";
+import { ofetch, FetchOptions } from "ofetch"
 import { KiwiOptions } from "../config";
 
-export function buildConfig(options: KiwiOptions): AxiosRequestConfig {
+export function buildConfig(options: KiwiOptions): FetchOptions<'json'> {
     let { apiKey, baseURL } = options;
 
     if (!baseURL) {
@@ -11,7 +11,7 @@ export function buildConfig(options: KiwiOptions): AxiosRequestConfig {
         baseURL = baseURL.substring(0, baseURL.length - 2);
     }
 
-    const config: AxiosRequestConfig = {
+    const config: FetchOptions<'json'> = {
         baseURL: baseURL,
         headers: {
             // accepts: "application/json",
@@ -22,7 +22,7 @@ export function buildConfig(options: KiwiOptions): AxiosRequestConfig {
     return config;
 }
 
-export function mergeConfig(baseConfig: AxiosRequestConfig, baseURL: string): AxiosRequestConfig {
+export function mergeConfig(baseConfig: FetchOptions<'json'>, baseURL: string): FetchOptions<'json'> {
     return {
         ...baseConfig,
         baseURL: `${baseConfig.baseURL}/${baseURL}`

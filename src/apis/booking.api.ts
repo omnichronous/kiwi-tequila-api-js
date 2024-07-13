@@ -1,11 +1,11 @@
-import axios, { AxiosRequestConfig } from "axios";
+import { ofetch, FetchOptions } from "ofetch"
 import { buildUrl, mergeConfig } from "../utils";
 import { BookingCheckFlightDto, BookingConfirmPaymentDto, BookingSaveBodyDto, BookingSaveParamsDto } from "../dtos";
 import { BookingCheckFlightsResponse, BookingConfirmPaymentResponse, BookingSaveResponse } from "../responses";
 
 export class BookingApi {
-    private readonly config: AxiosRequestConfig;
-    constructor(config: AxiosRequestConfig) {
+    private readonly config: FetchOptions<'json'>;
+    constructor(config: FetchOptions<'json'>) {
         this.config = mergeConfig(config, "booking");
     }
 
@@ -64,7 +64,7 @@ export class BookingApi {
      * @returns 
      */
     async checkFlights(dto: BookingCheckFlightDto): Promise<BookingCheckFlightsResponse> {
-        const { data } = await axios.get<BookingCheckFlightsResponse>(buildUrl("check_flights", dto), this.config);
+        const data = await ofetch<BookingCheckFlightsResponse>(buildUrl("check_flights", dto), this.config);
 
         // todo: convert data fields
 
@@ -182,7 +182,11 @@ export class BookingApi {
      * @returns
      */
     async saveBooking(dto: BookingSaveBodyDto, params?: BookingSaveParamsDto): Promise<BookingSaveResponse> {
-        const { data } = await axios.post<BookingSaveResponse>(buildUrl("save_booking", params), dto, this.config);
+        const data = await ofetch<BookingSaveResponse>(buildUrl("save_booking", params), {
+            method: 'post',
+            body: dto,
+            ...this.config
+        });
 
         return data;
     }
@@ -206,7 +210,11 @@ export class BookingApi {
      * and your customer.
      */
     async confirmPayment(dto: BookingConfirmPaymentDto): Promise<BookingConfirmPaymentResponse> {
-        const { data } = await axios.post<BookingConfirmPaymentResponse>("confirm_payment", dto, this.config);
+        const data = await ofetch<BookingConfirmPaymentResponse>("confirm_payment", {
+            method: 'post',
+            body: dto,
+            ...this.config
+        });
 
         return data;
     }
