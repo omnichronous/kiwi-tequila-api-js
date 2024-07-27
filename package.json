@@ -1,8 +1,8 @@
 {
   "name": "kiwi-tequila-api",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
   "homepage": "https://tequila.kiwi.com/portal/docs/tequila_api",
   "repository": {
     "type": "git",
@@ -10,7 +10,8 @@
   },
   "scripts": {
     "build": "npx tsc && cp package.json dist/package.json",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "npm run build"
   },
   "author": "",
   "license": "ISC",
