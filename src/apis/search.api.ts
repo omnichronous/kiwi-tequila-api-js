@@ -70,7 +70,7 @@ export class SearchApi {
             if (v.dateTo instanceof Date) v.dateTo = formatDate(v.dateTo);
         });
 
-        const data = await ofetch<SearchMultiCityResponse>(buildUrl("multicity", params), {
+        const data = await ofetch<SearchMultiCityResponse>(buildUrl("flights_multi", params), {
             method: 'post',
             body: dto,
             ...this.config
