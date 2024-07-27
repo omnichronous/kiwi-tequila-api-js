@@ -18,6 +18,12 @@ export class SearchApi {
      * @param params 
      */
     async singlecity(dto: SearchSingleCityDto): Promise<SearchSingleCityResponse> {
+        if (dto.date_from instanceof Date) dto.date_from = formatDate(dto.date_from);
+        if (dto.date_to instanceof Date) dto.date_to = formatDate(dto.date_to);
+
+        if (dto.return_from instanceof Date) dto.return_from = formatDate(dto.return_from);
+        if (dto.return_to instanceof Date) dto.return_to = formatDate(dto.return_to);
+
         if (dto.fly_from) dto.fly_from = serializeFlyLocations(dto.fly_from).join(",");
         if (dto.fly_to) dto.fly_to = serializeFlyLocations(dto.fly_to).join(",");
 

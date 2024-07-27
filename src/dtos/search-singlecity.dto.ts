@@ -50,13 +50,13 @@ export interface SearchSingleCityDto {
      * 
      * Example : 01/04/2021
      */
-    date_from: Date;
+    date_from: string | Date;
     /**
      * search flights upto this date (dd/mm/yyyy)
      * 
      * Example : 05/04/2021
      */
-    date_to: Date;
+    date_to: string | Date;
     /**
      * search flights from this date (DD/MM/YYYY). Use parameters dateFrom and
      * dateTo as a date range for the flight departure. Parameters
@@ -67,13 +67,13 @@ export interface SearchSingleCityDto {
      * 
      * Example : 03/04/2021
      */
-    return_from?: Date;
+    return_from?: string | Date;
     /**
      * max return date of the whole trip (dd/mm/yyyy)
      * 
      * Example : 04/04/2021
      */
-    return_to?: Date;
+    return_to?: string | Date;
     /**
      * the minimal length of stay in the destination given in the
      * fly_to parameter.
